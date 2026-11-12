@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monte Carlo Bankroll Risk Model</title>
+<meta name="description" content="A Monte Carlo simulation of risk of ruin, drawdowns and capital sizing, built in Excel and Python.">
+<meta property="og:title" content="Monte Carlo Bankroll Risk Model">
+<meta property="og:description" content="I simulated 10,000 poker careers to find out how much capital a winning player needs to survive the swings.">
+<meta property="og:image" content="assets/poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060a14;
+    --card: #0e1424;
+    --card-2: #131b2f;
+    --line: #1f2940;
+    --text: #f2f4f8;
+    --text-2: #9aa4b8;
+    --text-3: #5d6678;
+    --blue: #3d8bfd;
+    --orange: #ff7a3d;
+    --red: #ff3b47;
+    --green: #2fd27a;
+    --gold: #f5c542;
+    --max: 1080px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(900px 600px at -10% 0%, rgba(61,139,253,.16), transparent 70%),
+      radial-gradient(900px 600px at 110% 10%, rgba(255,122,61,.12), transparent 70%);
+    background-repeat: no-repeat;
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
+  .brand { font-weight: 900; font-style: italic; letter-spacing: .02em; font-size: 15px; text-transform: uppercase; color: var(--text); }
+  nav .links { display: flex; gap: 22px; font-size: 14px; font-weight: 600; }
+  nav .links a { color: var(--text-2); }
+  nav .links a:hover { color: var(--text); text-decoration: none; }
+
+  header.hero { padding: 48px 0 28px; }
+  .status { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); background: rgba(245,197,66,.1); padding: 6px 12px; border-radius: 999px; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+  h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.05; font-weight: 900; font-style: italic; letter-spacing: -.02em; margin: 18px 0 16px; }
+  .lede { font-size: clamp(18px, 2.2vw, 21px); color: var(--text-2); max-width: 760px; margin: 0 0 22px; }
+  .lede strong { color: var(--text); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .tags li { font-size: 13px; font-weight: 600; color: var(--text-2); border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; }
+
+  .video { margin: 36px 0 12px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+  .video video { display: block; width: 100%; height: auto; }
+  .caption { font-size: 14px; color: var(--text-3); margin: 0; }
+
+  section { padding: 56px 0 8px; }
+  .eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
+  h2 { font-size: clamp(26px, 3.4vw, 34px); line-height: 1.2; font-weight: 800; letter-spacing: -.01em; margin: 0 0 16px; }
+  p { margin: 0 0 16px; }
+  .muted { color: var(--text-2); }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 18px; border-top: 4px solid var(--c); }
+  .stat .num { font-size: clamp(30px, 3.6vw, 40px); font-weight: 900; font-style: italic; color: var(--c); line-height: 1.1; }
+  .stat .label { font-size: 15px; color: var(--text-2); margin-top: 6px; line-height: 1.45; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+  .apply { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .apply li { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .apply b { display: block; font-size: 15px; margin-bottom: 2px; }
+  .apply span { font-size: 15px; color: var(--text-2); }
+
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .steps li { counter-increment: s; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .steps li::before { content: counter(s, decimal-leading-zero); display: block; font-weight: 900; font-style: italic; color: var(--blue); font-size: 20px; margin-bottom: 6px; }
+  .steps b { display: block; margin-bottom: 4px; }
+  .steps span { color: var(--text-2); font-size: 15px; }
+  code, .formula { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; background: var(--card-2); border: 1px solid var(--line); padding: 1px 6px; border-radius: 6px; color: var(--text); }
+
+  figure { margin: 0; }
+  .chart { background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+  .chart img { display: block; width: 100%; height: auto; }
+  figcaption { font-size: 15px; color: var(--text-2); margin-top: 10px; }
+  figcaption b { color: var(--text); }
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 24px; margin-top: 24px; }
+  .gallery .wide { grid-column: 1 / -1; }
+
+  .files { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 24px; }
+  .file { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; color: var(--text); transition: border-color .15s, transform .15s; }
+  .file:hover { border-color: var(--blue); transform: translateY(-2px); text-decoration: none; }
+  .file .type { font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--blue); text-transform: uppercase; }
+  .file b { display: block; margin: 6px 0 4px; font-size: 17px; }
+  .file span { font-size: 14px; color: var(--text-2); }
+
+  .roadmap { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
+  .roadmap li { display: grid; grid-template-columns: 130px 1fr; gap: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+  .roadmap .when { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--c, var(--text-3)); }
+  .roadmap b { display: block; }
+  .roadmap span { font-size: 15px; color: var(--text-2); }
+
+  .limits { margin: 0; padding-left: 20px; color: var(--text-2); }
+  .limits li { margin-bottom: 8px; }
+
+  footer { margin-top: 72px; border-top: 1px solid var(--line); padding: 28px 0 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--text-3); }
+  footer a { color: var(--text-2); }
+
+  @media (max-width: 820px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .two, .steps, .gallery, .files { grid-template-columns: 1fr; }
+    .roadmap li { grid-template-columns: 1fr; gap: 4px; }
+    nav .links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <!-- Replace [Your Name] here and in the footer -->
+    <span class="brand">[Your Name]</span>
+    <div class="links">
+      <a href="#results">Results</a>
+      <a href="#method">Method</a>
+      <a href="#charts">Charts</a>
+      <a href="#files">Files</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="status">In progress</span>
+    <h1>Monte Carlo Bankroll Risk Model</h1>
+    <p class="lede">A poker player with a real edge still faces huge swings. <strong>How much capital do they need so bad luck doesn't wipe them out before the edge pays off?</strong> I simulated 10,000 careers to find out.</p>
+    <ul class="tags">
+      <li>Excel</li><li>Python</li><li>NumPy</li><li>pandas</li><li>SciPy</li><li>Matplotlib</li><li>Monte Carlo simulation</li><li>Risk modeling</li>
+    </ul>
+    <div class="video">
+      <video controls playsinline preload="metadata" poster="assets/poster.jpg">
+        <source src="Poker_Bankroll_Simulation.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="caption">Two of the 10,000 simulated players: same skill, same $2,000 bankroll, opposite outcomes. Simulated data.</p>
+  </header>
+
+  <section id="results">
+    <p class="eyebrow">Key findings</p>
+    <h2>Having an edge isn't enough</h2>
+    <p class="muted">Results for a player winning 5 big blinds per 100 hands with a standard deviation of 90, starting with 10 buy-ins ($2,000) and playing 10,000 hands.</p>
+    <div class="stats">
+      <div class="stat" style="--c: var(--red)"><div class="num">11%</div><div class="label">went broke within 10,000 hands despite winning on average</div></div>
+      <div class="stat" style="--c: var(--gold)"><div class="num">29%</div><div class="label">finished below their starting bankroll</div></div>
+      <div class="stat" style="--c: var(--blue)"><div class="num">~8</div><div class="label">buy-ins: the typical player's worst downswing</div></div>
+      <div class="stat" style="--c: var(--green)"><div class="num">24</div><div class="label">buy-ins needed to cut risk of ruin to 5%</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="two">
+      <div>
+        <p class="eyebrow">Why it matters</p>
+        <h2>The same question shows up everywhere money is at risk</h2>
+        <p class="muted">Positive expected return, high volatility, and a capital base that can hit zero first. Whether you survive depends on volatility relative to your edge, not just on whether the edge is positive.</p>
+      </div>
+      <ul class="apply">
+        <li><b>Trading and investing</b><span>How much capital a strategy needs to survive its drawdowns.</span></li>
+        <li><b>Program cost reserves</b><span>How much budget margin a project needs to finish on budget at a given confidence level.</span></li>
+        <li><b>Startup runway</b><span>The chance a company runs out of cash before it becomes profitable.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="method">
+    <p class="eyebrow">Method</p>
+    <h2>How the model works</h2>
+    <ol class="steps">
+      <li><b>Simulate</b><span>Each block of 100 hands is drawn from a normal distribution using the player's win rate and standard deviation. 10,000 paths of 100 blocks, vectorized in NumPy. A path that hits $0 stays at $0.</span></li>
+      <li><b>Measure</b><span>Risk of ruin, the spread of ending bankrolls, and maximum drawdown (the largest drop from a running peak, the same metric used for funds).</span></li>
+      <li><b>Validate</b><span>Check simulated risk of ruin against closed-form results for a random walk with drift, including <span class="formula">P(ruin) = exp(−2μB/σ²)</span> with no time limit.</span></li>
+      <li><b>Test sensitivity</b><span>Map how bankroll size and win rate trade off, and solve for the bankroll that hits a 5% risk-of-ruin target.</span></li>
+    </ol>
+    <p class="muted" style="margin-top:20px">I built the model twice: a formula-driven Excel version (500 paths, summary tab, sensitivity table) and a Python version (10,000 paths, validation and convergence tests).</p>
+  </section>
+
+  <section id="charts">
+    <p class="eyebrow">Charts</p>
+    <h2>What the simulation shows</h2>
+    <div class="gallery">
+      <figure class="wide">
+        <div class="chart"><img src="charts/1_fan_chart.png" alt="Fan chart of 10,000 simulated bankroll paths with percentile bands"></div>
+        <figcaption><b>The range of outcomes.</b> The median player grows steadily, but the bottom 5% band reaches $0 around hand 5,000.</figcaption>
+      </figure>
+      <figure>
+        <div class="chart"><img src="charts/3_sim_vs_theory.png" alt="Simulated risk of ruin compared with closed-form theory"></div>
+        <figcaption><b>Validation.</b> The simulation tracks the closed-form math. The small gap comes from checking the bankroll only every 100 hands.</figcaption>
+      </figure>
+      <figure>
+        <div class="chart"><img src="charts/5_sensitivity_heatmap.png" alt="Heatmap of risk of ruin by bankroll and win rate"></div>
+        <figcaption><b>Skill vs. capital.</b> Risk falls exponentially with bankroll size. Doubling the win rate roughly halves the bankroll needed.</figcaption>
+      </figure>
+      <figure>
+        <div class="chart"><img src="charts/2_drawdowns.png" alt="Histogram of maximum drawdowns"></div>
+        <figcaption><b>Drawdowns.</b> A typical player's worst losing stretch over 10,000 hands is about 8 buy-ins.</figcaption>
+      </figure>
+      <figure>
+        <div class="chart"><img src="charts/4_convergence.png" alt="Risk of ruin estimate converging as simulated paths increase"></div>
+        <figcaption><b>Convergence.</b> The estimate settles after a few thousand paths; 10,000 gives a margin of about ±0.6 points.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="files">
+    <p class="eyebrow">Files</p>
+    <h2>Explore the model</h2>
+    <div class="files">
+      <a class="file" href="Poker_Bankroll_Risk_Model.xlsx" download><div class="type">Excel</div><b>Bankroll risk model</b><span>Change the inputs and press F9 to re-run.</span></a>
+      <a class="file" href="Poker_Bankroll_Risk_Model.ipynb" download><div class="type">Python notebook</div><b>Simulation and validation</b><span>Opens in Jupyter, Google Colab or VS Code.</span></a>
+      <!-- Replace with your repository URL -->
+      <a class="file" href="https://github.com/[username]/[repository]"><div class="type">GitHub</div><b>Source repository</b><span>All files, charts and the README.</span></a>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Roadmap</p>
+    <h2>What I'm working on next</h2>
+    <ul class="roadmap">
+      <li style="--c: var(--green)"><div class="when">Done</div><div><b>Core model</b><span>Excel and Python simulation, validation, sensitivity analysis, animated visualization.</span></div></li>
+      <li style="--c: var(--gold)"><div class="when">Next</div><div><b>More realistic assumptions</b><span>An uncertain win rate, a move-down-in-stakes rule, and fat-tailed results for stress testing.</span></div></li>
+      <li><div class="when">Planned</div><div><b>Interactive app</b><span>A Streamlit app with sliders for win rate, variance and bankroll.</span></div></li>
+      <li><div class="when">Planned</div><div><b>Applying the method</b><span>Using the same framework to model program cost risk and budget confidence levels.</span></div></li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="eyebrow">Limitations</p>
+    <h2>What the model doesn't capture yet</h2>
+    <ul class="limits">
+      <li>The win rate is treated as known. In practice it's estimated from noisy results, so true risk is higher.</li>
+      <li>Ruin means $0. Real players are effectively broke once they can't afford a buy-in, and many move down in stakes instead.</li>
+      <li>Normally distributed results understate rare extreme swings.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>[Your Name] · Finance, James Madison University</span>
+    <!-- Replace with your LinkedIn URL -->
+    <span><a href="https://www.linkedin.com/in/[your-profile]">LinkedIn</a> · All results are simulated.</span>
+  </footer>
+
+</div>
+</body>
+</html>
