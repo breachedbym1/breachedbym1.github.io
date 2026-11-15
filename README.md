@@ -14,7 +14,8 @@ Finance student at James Madison University. This repo is my portfolio site: pla
 |---|---|
 | `data.js` | All homepage content: intro, links, projects, updates, skills |
 | `index.html` | Homepage layout |
-| `main.js` | Builds the homepage from `data.js` |
+| `main.js` | Builds the homepage from `data.js` and runs the sticker animations |
+| `stickers.js` | The sticker illustrations (inline SVG) |
 | `styles.css` | Shared styles for every page |
 | `home.css` | Homepage-only styles |
 | `bankroll-risk-model/` | Project page and its files |
@@ -27,7 +28,7 @@ Open `data.js`, copy one line in `updates`, paste it at the top of the list and 
 { date: "2026-11-20", project: "Bankroll model", text: "Added a move-down-in-stakes rule." },
 ```
 
-The list, the activity grid and the "Last updated" date in the footer all update on their own.
+The page groups updates by month and shows the newest first. Only the month is shown, not the day.
 
 ## Adding a project
 
