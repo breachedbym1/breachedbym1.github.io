@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Diego Reed · Finance, James Madison University</title>
-<meta name="description" content="Finance student at James Madison University. I build risk and capital models in Excel and Python. Looking for Summer 2027 internships.">
+<meta name="description" content="Finance student at James Madison University interested in financial modeling and data analytics. Looking for Summer 2027 internships.">
 <meta name="theme-color" content="#0a0a0a">
 
 <!-- Link previews (LinkedIn, iMessage, etc.). These must be absolute URLs. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Diego Reed · Finance, James Madison University">
-<meta property="og:description" content="I build risk and capital models in Excel and Python. Looking for Summer 2027 internships in finance, FP&amp;A or analytics.">
+<meta property="og:description" content="Finance student interested in financial modeling and data analytics. Looking for Summer 2027 internships in finance, FP&amp;A or analytics.">
 <meta property="og:url" content="https://breachedbym1.github.io/">
 <meta property="og:image" content="https://breachedbym1.github.io/bankroll-risk-model/assets/poster.jpg">
 <meta property="og:image:width" content="1280">
@@ -21,7 +21,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="home.css">
 <script>document.documentElement.classList.add("js");</script>
@@ -32,8 +32,9 @@
 <nav class="ticks" aria-label="Sections">
   <a href="#top"><span></span><span>Intro</span></a>
   <a href="#projects"><span></span><span>Projects</span></a>
-  <a href="#updates"><span></span><span>Updates</span></a>
+  <a href="#about"><span></span><span>About</span></a>
   <a href="#skills"><span></span><span>Skills</span></a>
+  <a href="#updates"><span></span><span>Updates</span></a>
   <a href="#contact"><span></span><span>Contact</span></a>
 </nav>
 
@@ -42,7 +43,7 @@
     <a class="mark" href="#top" aria-label="Diego Reed, back to top">DR</a>
     <nav aria-label="Main">
       <a href="#projects">Projects</a>
-      <a href="#updates">Updates</a>
+      <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -50,13 +51,22 @@
 
   <main id="main">
     <div class="hero" id="top">
-      <div class="hero-art" aria-hidden="true">
-        <svg id="paths" viewBox="0 0 720 220" preserveAspectRatio="none"></svg>
-        <span class="art-label mono">40 random paths · 5 bb/100 · σ 90 · $2,000 start</span>
-      </div>
+      <!-- Sticker cluster: filled in by main.js from stickers.js -->
+      <div class="composition" id="stickers"></div>
+
       <div class="inner hero-text">
-        <h1 class="name" data-field="name">Diego Reed</h1>
-        <p class="school mono" data-field="school">Finance · James Madison University</p>
+        <div class="profile sticker-host" id="avatar"></div>
+        <div class="name-row">
+          <h1 class="name" data-field="name">Diego Reed</h1>
+          <span class="name-mini" id="name-mini" aria-hidden="true"></span>
+          <span class="sep" aria-hidden="true"></span>
+          <span class="loc" tabindex="0" aria-describedby="loc-time">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.8 3.9 6 3.9 9.5S14.6 18.7 12 21.5M12 2.5C9.4 5.3 8.1 8.5 8.1 12s1.3 6.7 3.9 9.5"/></svg>
+            <span data-field="location">Ashburn, VA</span>
+            <span class="tip" role="tooltip" id="loc-time"></span>
+          </span>
+        </div>
+        <p class="tagline" data-field="tagline"></p>
         <p class="intro" data-field="intro"></p>
         <p class="looking"><span class="ping" aria-hidden="true"></span><span data-field="lookingFor"></span></p>
       </div>
@@ -64,24 +74,36 @@
 
     <section id="projects" aria-labelledby="projects-h">
       <div class="section-head"><h2 id="projects-h">Projects</h2><span class="hint" id="project-count"></span></div>
+      <p class="note" aria-hidden="true">built it twice:<br>Excel first, then Python<svg class="note-arrow" viewBox="0 0 60 40"><path d="M54 4C50 22 34 32 8 30M8 30l9-7M8 30l8 7"/></svg></p>
       <div class="inner" id="project-list"></div>
     </section>
 
-    <section id="updates" aria-labelledby="updates-h">
-      <div class="section-head"><h2 id="updates-h">Updates</h2><span class="hint">newest first</span></div>
-      <div class="inner">
-        <figure class="activity" id="activity" aria-label="Activity over the last 16 weeks"></figure>
-        <ol class="log" id="update-list"></ol>
+    <section id="about" aria-labelledby="about-h">
+      <div class="greet-row inner">
+        <span class="greet-mini" id="greet-left" aria-hidden="true"></span>
+        <h2 class="greet" id="about-h">Hello!</h2>
+        <span class="greet-mini right" id="greet-right" aria-hidden="true"></span>
       </div>
+      <p class="note" aria-hidden="true">a little about me<svg class="note-arrow" viewBox="0 0 60 40"><path d="M54 4C50 22 34 32 8 30M8 30l9-7M8 30l8 7"/></svg></p>
+      <div class="iso-wrap" id="iso" aria-hidden="true"></div>
+      <ul class="about inner" id="about-list"></ul>
     </section>
 
     <section id="skills" aria-labelledby="skills-h">
       <div class="section-head"><h2 id="skills-h">Skills</h2></div>
+      <p class="note" aria-hidden="true">still adding to this list<svg class="note-arrow" viewBox="0 0 60 40"><path d="M54 4C50 22 34 32 8 30M8 30l9-7M8 30l8 7"/></svg></p>
       <div id="skill-list"></div>
+    </section>
+
+    <section id="updates" aria-labelledby="updates-h">
+      <div class="section-head"><h2 id="updates-h">Updates</h2><span class="hint">newest first</span></div>
+      <p class="note" aria-hidden="true">what I've been<br>working on<svg class="note-arrow" viewBox="0 0 60 40"><path d="M54 4C50 22 34 32 8 30M8 30l9-7M8 30l8 7"/></svg></p>
+      <div class="inner" id="update-list"></div>
     </section>
 
     <section id="contact" aria-labelledby="contact-h">
       <div class="section-head"><h2 id="contact-h">Contact</h2></div>
+      <p class="note" aria-hidden="true">email is the fastest<br>way to reach me<svg class="note-arrow" viewBox="0 0 60 40"><path d="M54 4C50 22 34 32 8 30M8 30l9-7M8 30l8 7"/></svg></p>
       <ul class="links" id="link-list"></ul>
     </section>
 
@@ -97,11 +119,12 @@
 
   <footer class="site-footer">
     <span>Diego Reed · Finance, James Madison University</span>
-    <span id="last-updated"></span>
+    <a href="resume.pdf">Resume (PDF)</a>
   </footer>
 </div>
 
 <script src="data.js"></script>
+<script src="stickers.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
