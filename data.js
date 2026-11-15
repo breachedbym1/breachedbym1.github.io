@@ -25,8 +25,8 @@ window.SITE = {
     { label: "LinkedIn", handle: "diego-reed", url: "https://www.linkedin.com/in/diego-reed-625485384/", icon: "linkedin" },
     { label: "GitHub", handle: "@breachedbym1", url: "https://github.com/breachedbym1", icon: "github" },
     { label: "Email", handle: "reed2dt@dukes.jmu.edu", url: "mailto:reed2dt@dukes.jmu.edu", icon: "mail" },
-    // Set url to "resume.pdf" once the PDF is in the repo root. Leave it null to hide the link.
-    { label: "Resume", handle: "PDF", url: null, icon: "file" }
+    // Set url to null to hide the link.
+    { label: "Resume", handle: "PDF", url: "resume.pdf", icon: "file" }
   ],
 
   projects: [
