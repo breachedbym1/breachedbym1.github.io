@@ -30,7 +30,7 @@ window.SITE = {
 
   // The "Good morning / afternoon / evening" section. {b}...{/b} makes text bold.
   about: [
-    { icon: "chart", text: "{b}I'm Diego, a finance junior at JMU.{/b} I transferred in after earning my associate's in business administration at Northern Virginia Community College." },
+    { icon: "chart", text: "{b}I'm Diego, a finance junior at JMU{/b} who likes digging into numbers and building models to make sense of them." },
     { icon: "receipt", text: "{b}At CarMax I worked in the business office,{/b} auditing sales paperwork, working with finance companies and keeping records in Excel. I also trained new associates." },
     { icon: "key", text: "{b}Now I manage residential properties{/b} while I'm in school: tenants, vendors, scheduling and the admin that keeps it all running." },
     { icon: "chip", text: "{b}I play poker,{/b} which is where my first model came from: how much money does a winning player need to survive a bad run?" },
