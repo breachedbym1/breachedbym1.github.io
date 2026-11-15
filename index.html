@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diego Reed · Finance, James Madison University</title>
+<meta name="description" content="Finance student at James Madison University. I build risk and capital models in Excel and Python. Looking for Summer 2027 internships.">
+<meta name="theme-color" content="#0a0a0a">
+
+<!-- Link previews (LinkedIn, iMessage, etc.). These must be absolute URLs. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Diego Reed · Finance, James Madison University">
+<meta property="og:description" content="I build risk and capital models in Excel and Python. Looking for Summer 2027 internships in finance, FP&amp;A or analytics.">
+<meta property="og:url" content="https://breachedbym1.github.io/">
+<meta property="og:image" content="https://breachedbym1.github.io/bankroll-risk-model/assets/poster.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="Animated replay from my Monte Carlo bankroll risk model">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="home.css">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="ticks" aria-label="Sections">
+  <a href="#top"><span></span><span>Intro</span></a>
+  <a href="#projects"><span></span><span>Projects</span></a>
+  <a href="#updates"><span></span><span>Updates</span></a>
+  <a href="#skills"><span></span><span>Skills</span></a>
+  <a href="#contact"><span></span><span>Contact</span></a>
+</nav>
+
+<div class="frame">
+  <header class="topbar">
+    <a class="mark" href="#top" aria-label="Diego Reed, back to top">DR</a>
+    <nav aria-label="Main">
+      <a href="#projects">Projects</a>
+      <a href="#updates">Updates</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="hero" id="top">
+      <div class="hero-art" aria-hidden="true">
+        <svg id="paths" viewBox="0 0 720 220" preserveAspectRatio="none"></svg>
+        <span class="art-label mono">40 random paths · 5 bb/100 · σ 90 · $2,000 start</span>
+      </div>
+      <div class="inner hero-text">
+        <h1 class="name" data-field="name">Diego Reed</h1>
+        <p class="school mono" data-field="school">Finance · James Madison University</p>
+        <p class="intro" data-field="intro"></p>
+        <p class="looking"><span class="ping" aria-hidden="true"></span><span data-field="lookingFor"></span></p>
+      </div>
+    </div>
+
+    <section id="projects" aria-labelledby="projects-h">
+      <div class="section-head"><h2 id="projects-h">Projects</h2><span class="hint" id="project-count"></span></div>
+      <div class="inner" id="project-list"></div>
+    </section>
+
+    <section id="updates" aria-labelledby="updates-h">
+      <div class="section-head"><h2 id="updates-h">Updates</h2><span class="hint">newest first</span></div>
+      <div class="inner">
+        <figure class="activity" id="activity" aria-label="Activity over the last 16 weeks"></figure>
+        <ol class="log" id="update-list"></ol>
+      </div>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-h">
+      <div class="section-head"><h2 id="skills-h">Skills</h2></div>
+      <div id="skill-list"></div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-h">
+      <div class="section-head"><h2 id="contact-h">Contact</h2></div>
+      <ul class="links" id="link-list"></ul>
+    </section>
+
+    <noscript>
+      <div class="inner" style="padding-top:16px">
+        <p>This page needs JavaScript to list projects. You can still see the
+        <a href="bankroll-risk-model/" style="color:var(--accent)">Monte Carlo Bankroll Risk Model</a>,
+        <a href="https://www.linkedin.com/in/diego-reed-625485384/" style="color:var(--accent)">LinkedIn</a> and
+        <a href="https://github.com/breachedbym1" style="color:var(--accent)">GitHub</a>.</p>
+      </div>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <span>Diego Reed · Finance, James Madison University</span>
+    <span id="last-updated"></span>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
