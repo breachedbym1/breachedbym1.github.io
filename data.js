@@ -26,7 +26,7 @@ window.SITE = {
   intro:
     "I'm a junior at James Madison University studying finance. I'm most interested in financial modeling and data analytics: building models in Excel and Python, testing the assumptions behind them, and figuring out what the numbers actually say.",
   lookingFor:
-    "Looking for Summer 2027 internships in finance, FP&A or analytics",
+    "Looking for Summer 2027 internships",
 
   // The "Good morning / afternoon / evening" section. {b}...{/b} makes text bold.
   about: [
