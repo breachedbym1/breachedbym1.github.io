@@ -2,10 +2,14 @@
   Everything the homepage shows lives in this file.
 
   To add an update: copy one entry in `updates`, paste it at the TOP of the
-  list, and change the date and text. Dates use YYYY-MM-DD.
+  list, and change the date and text. Dates use YYYY-MM-DD. The page groups
+  updates by month and only shows the month, not the day.
 
   To add a project: copy the object in `projects` and fill in the fields.
   Paths like "bankroll-risk-model/" are relative to the site root.
+
+  Sticker names you can use for `icon` in `about`:
+  chart, sheet, receipt, key, chip, code, calc, coffee
 */
 window.SITE = {
   // Change these two if the GitHub username or repo ever changes.
@@ -15,16 +19,28 @@ window.SITE = {
   repoUrl: "https://github.com/breachedbym1/breachedbym1.github.io",
 
   name: "Diego Reed",
+  location: "Ashburn, VA",
+  timeZone: "America/New_York",
   school: "Finance · James Madison University",
+  tagline: "Finance student who likes to model things.",
   intro:
-    "I'm a junior studying finance at JMU. I build models in Excel and Python to answer questions about risk and capital, like how much money you need to survive a bad run.",
+    "I'm a junior at James Madison University studying finance. I'm most interested in financial modeling and data analytics: building models in Excel and Python, testing the assumptions behind them, and figuring out what the numbers actually say.",
   lookingFor:
     "Looking for Summer 2027 internships in finance, FP&A or analytics",
+
+  // The "Good morning / afternoon / evening" section. {b}...{/b} makes text bold.
+  about: [
+    { icon: "chart", text: "{b}I'm Diego, a finance junior at JMU.{/b} I transferred in after earning my associate's in business administration at Northern Virginia Community College." },
+    { icon: "receipt", text: "{b}At CarMax I worked in the business office,{/b} auditing sales paperwork, working with finance companies and keeping records in Excel. I also trained new associates." },
+    { icon: "key", text: "{b}Now I manage residential properties{/b} while I'm in school: tenants, vendors, scheduling and the admin that keeps it all running." },
+    { icon: "chip", text: "{b}I play poker,{/b} which is where my first model came from: how much money does a winning player need to survive a bad run?" },
+    { icon: "code", text: "{b}Right now I'm getting better at Python{/b} so my models can do more than a spreadsheet can." }
+  ],
 
   links: [
     { label: "LinkedIn", handle: "diego-reed", url: "https://www.linkedin.com/in/diego-reed-625485384/", icon: "linkedin" },
     { label: "GitHub", handle: "@breachedbym1", url: "https://github.com/breachedbym1", icon: "github" },
-    { label: "Email", handle: "reed2dt@dukes.jmu.edu", url: "mailto:reed2dt@dukes.jmu.edu", icon: "mail" },
+    { label: "Email", handle: "reed2dt@dukes.jmu.edu", url: "mailto:reed2dt@dukes.jmu.edu", icon: "mail", copy: "reed2dt@dukes.jmu.edu" },
     // Set url to null to hide the link.
     { label: "Resume", handle: "PDF", url: "resume.pdf", icon: "file" }
   ],
@@ -56,8 +72,9 @@ window.SITE = {
   ],
 
   skills: [
-    { group: "Finance & modeling", items: ["Excel", "Monte Carlo simulation", "Risk modeling", "Sensitivity analysis"] },
-    { group: "Python & data", items: ["Python", "NumPy", "pandas", "SciPy", "Matplotlib", "Jupyter"] },
+    { group: "Finance", items: ["Financial analysis", "Financial statement analysis", "Capital budgeting", "Time value of money"] },
+    { group: "Modeling", items: ["Data modeling", "Monte Carlo simulation", "Risk modeling", "Sensitivity analysis", "Forecasting", "Regression"] },
+    { group: "Data & tools", items: ["Data analysis", "Microsoft Excel", "Python", "NumPy", "pandas", "SciPy", "Matplotlib", "Jupyter"] },
     { group: "Web", items: ["HTML", "CSS", "GitHub Pages"] }
   ]
 };
