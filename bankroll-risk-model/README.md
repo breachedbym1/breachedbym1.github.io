@@ -1,6 +1,6 @@
 # Poker Bankroll Risk Model
 
-**Live site:** https://breachedbym1.github.io
+**Project page:** https://breachedbym1.github.io/bankroll-risk-model/ · **Portfolio:** https://breachedbym1.github.io
 
 I play poker and kept running into the same question: if I'm a winning player, how much money do I actually need so a bad run doesn't wipe me out before the wins show up? The usual answer is "20-30 buy-ins," but nobody explains where that number comes from. So I built a model to figure it out.
 
